@@ -23,7 +23,7 @@ public class AccountService {
         dbService.addUser(userDataSet.getLogin(), userDataSet.getPassword());
     }
 
-    public UserDataSet getUserByLogin(String login) {
+    public UserDataSet getUserByLogin(String login) throws SQLException {
         return dbService.getUserByName(login);
     }
 
