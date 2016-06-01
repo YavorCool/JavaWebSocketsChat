@@ -15,8 +15,8 @@ import java.sql.SQLException;
 public class DBServiceImplJDBC implements DBService {
     private final Connection connection;
 
-    public DBServiceImplJDBC(Connection connection) {
-        this.connection = connection;
+    public DBServiceImplJDBC() {
+        this.connection = getMysqlConnection();
     }
 
     public static Connection getMysqlConnection() {
@@ -26,7 +26,7 @@ public class DBServiceImplJDBC implements DBService {
             StringBuilder url = new StringBuilder();
 
             url
-                    .append("jdbc:mysql//") //db type
+                    .append("jdbc:mysql://") //db type
                     .append("127.0.0.1:") //db ip
                     .append("3306/") //db port
                     .append("users?")// db name

@@ -1,5 +1,7 @@
 package chat;
 
+import accounts.AccountService;
+
 import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
