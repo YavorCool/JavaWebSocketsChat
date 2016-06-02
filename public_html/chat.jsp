@@ -21,8 +21,7 @@
 
         function sendMessage() {
             var messageField = document.getElementById("message");
-            var userNameField = document.getElementById("username");
-            var message = userNameField.value + ":" + messageField.value;
+            var message = ":" + messageField.value;
             ws.send(message);
             messageField.value = '';
         }

@@ -28,13 +28,8 @@ public class WebSocketChatServlet extends WebSocketServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect("/chat.jsp");
-    }
-
-    @Override
     public void configure(WebSocketServletFactory webSocketServletFactory) {
         webSocketServletFactory.getPolicy().setIdleTimeout(LOGOUT_TIME);
-        webSocketServletFactory.setCreator((request, response) -> new ChatWebSocket(chatService, accountService, accountService.getUserBySessionId(request.getSession().getId()).getLogin()));
+        webSocketServletFactory.setCreator((request, response) -> new ChatWebSocket(chatService, accountService, "userName"));
     }
 }

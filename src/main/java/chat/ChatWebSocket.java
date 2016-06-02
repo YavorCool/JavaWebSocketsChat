@@ -7,6 +7,8 @@ import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * Created by qwe on 31.05.2016.
  */
@@ -28,8 +30,8 @@ public class ChatWebSocket {
     @OnWebSocketConnect
     public void onOpen(Session session) {
         chatService.add(this);
-        //userName = accountService.getUserBySessionId(session.toString()).getLogin();
-        System.out.println(session.toString());
+        this.session = session;
+        userName = session.getUpgradeRequest().getCookies().get(2).toString().substring(12, 44);
     }
 
     @OnWebSocketMessage

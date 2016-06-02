@@ -62,8 +62,6 @@ public class SessionServlet extends HttpServlet {
         }
 
         accountService.addSession(req.getSession().getId(), profile);
-        resp.setContentType("text/html;charset=utf-8");
-        resp.getWriter().println("Authorized: " + profile.getLogin());
-        req.getRequestDispatcher("/chat").forward(req, resp);
+        resp.sendRedirect("/chat.jsp");
     }
 }

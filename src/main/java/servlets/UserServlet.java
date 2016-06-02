@@ -34,12 +34,11 @@ public class UserServlet extends HttpServlet {
 
         try {
             accountService.addNewUser(newUser);
-            accountService.addSession(req.getSession().getId(), newUser);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         resp.setStatus(HttpServletResponse.SC_OK);
-        req.getRequestDispatcher("/chat.jsp").forward(req, resp);
+        req.getRequestDispatcher("/signin").forward(req, resp);
     }
 }
