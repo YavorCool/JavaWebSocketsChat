@@ -16,14 +16,10 @@ import javax.servlet.http.HttpSession;
 @WebSocket
 public class ChatWebSocket {
     private ChatService chatService;
-    private final AccountService accountService;
     private Session session;
-    private String userName;
 
-    public ChatWebSocket(ChatService chatService, AccountService accountService, String userName) {
+    public ChatWebSocket(ChatService chatService) {
         this.chatService = chatService;
-        this.accountService = accountService;
-        this.userName = userName;
     }
 
 
@@ -31,12 +27,11 @@ public class ChatWebSocket {
     public void onOpen(Session session) {
         chatService.add(this);
         this.session = session;
-        userName = session.getUpgradeRequest().getCookies().get(2).toString().substring(12, 44);
     }
 
     @OnWebSocketMessage
     public void onMessage(String data) {
-        chatService.sendMessage(userName + data);
+        chatService.sendMessage(data);
     }
 
     @OnWebSocketClose

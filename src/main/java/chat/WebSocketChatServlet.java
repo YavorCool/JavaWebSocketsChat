@@ -17,19 +17,16 @@ import java.io.IOException;
 @WebServlet (name = "WebSocketChatServlet", urlPatterns = {"/chat"})
 public class WebSocketChatServlet extends WebSocketServlet {
 
-    private final AccountService accountService;
-
     private final static int LOGOUT_TIME = 10 * 60 * 1000;
     private final ChatService chatService;
 
     public WebSocketChatServlet(AccountService accountService) {
-        this.accountService = accountService;
         this.chatService = new ChatService();
     }
 
     @Override
     public void configure(WebSocketServletFactory webSocketServletFactory) {
         webSocketServletFactory.getPolicy().setIdleTimeout(LOGOUT_TIME);
-        webSocketServletFactory.setCreator((request, response) -> new ChatWebSocket(chatService, accountService, "userName"));
+        webSocketServletFactory.setCreator((request, response) -> new ChatWebSocket(chatService));
     }
 }
