@@ -2,6 +2,7 @@ package servlets;
 
 import accounts.AccountService;
 import dbService.dataSets.UserDataSet;
+import templater.PageGenerator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by qwe on 01.06.2016.
@@ -40,6 +43,8 @@ public class SessionServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
+        Map<String, Object> pageVariables = new HashMap<>();
+
         if (login == null || password == null) {
             resp.setContentType("text/html;charset=utf-8");
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -57,11 +62,12 @@ public class SessionServlet extends HttpServlet {
         if (profile == null || !profile.getPassword().equals(password)) {
             resp.setContentType("text/html;charset=utf-8");
             resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            resp.getWriter().println("Unathorized");
+            resp.getWriter().println("Unauthorized");
             return;
         }
 
         accountService.addSession(req.getSession().getId(), profile);
-        resp.sendRedirect("/chat.jsp");
+        pageVariables.put("username", profile.getLogin());
+        resp.getWriter().println(PageGenerator.instance().getPage("chat.html", pageVariables));
     }
 }
